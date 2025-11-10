@@ -25,23 +25,19 @@ import com.example.scratchcard.ui.cards.ScratchCardViewModel
 fun ActivationScreen(navController: NavController, viewModel: ScratchCardViewModel) {
     val uiState by viewModel.uiState.collectAsState()
 
-    ScreenScaffold(title = stringResource(id = R.string.activation_screen_title)) { paddingValues ->
-        Column(
-            modifier = Modifier.fillMaxSize().padding(paddingValues).padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(text = "Card State: ${uiState.status}")
-            Spacer(modifier = Modifier.height(8.dp))
+    Column(
+        modifier = Modifier.fillMaxSize().padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(text = stringResource(id = R.string.card_state_label, uiState.status.name))
+        Spacer(modifier = Modifier.height(8.dp))
 
-            when (val state = uiState) {
-                is ScratchCardUiState.Loading -> CircularProgressIndicator()
-                is ScratchCardUiState.Error -> Text(text = "Error: ${state.message}")
-                is ScratchCardUiState.Content -> {
-                    Button(onClick = { viewModel.activateCard() }, enabled = state.code != null) {
-                        Text("Activate Card")
-                    }
-                }
+        if (uiState is ScratchCardUiState.Loading) {
+            CircularProgressIndicator()
+        } else {
+            Button(onClick = { viewModel.activateCard() }, enabled = uiState.code != null) {
+                Text(stringResource(id = R.string.activate_card_button))
             }
         }
     }

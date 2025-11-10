@@ -23,24 +23,22 @@ import com.example.scratchcard.ui.cards.ScratchCardViewModel
 fun MainScreen(navController: NavController, viewModel: ScratchCardViewModel) {
     val uiState by viewModel.uiState.collectAsState()
 
-    ScreenScaffold(title = stringResource(id = R.string.main_screen_title)) { paddingValues ->
-        Column(
-            modifier = Modifier.fillMaxSize().padding(paddingValues).padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(text = "Card State: ${uiState.status}")
-            uiState.code?.let {
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Code: $it")
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = { navController.navigate("scratch") }) {
-                Text("Go to Scratch Screen")
-            }
-            Button(onClick = { navController.navigate("activation") }) {
-                Text("Go to Activation Screen")
-            }
+    Column(
+        modifier = Modifier.fillMaxSize().padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(text = stringResource(id = R.string.card_state_label, uiState.status.name))
+        uiState.code?.let {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = stringResource(id = R.string.code_label, it))
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = { navController.navigate("scratch") }) {
+            Text(stringResource(id = R.string.go_to_scratch_screen_button))
+        }
+        Button(onClick = { navController.navigate("activation") }) {
+            Text(stringResource(id = R.string.go_to_activation_screen_button))
         }
     }
 }

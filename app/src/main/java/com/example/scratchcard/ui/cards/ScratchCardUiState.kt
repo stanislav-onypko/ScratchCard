@@ -15,10 +15,4 @@ sealed class ScratchCardUiState(
         override val code: String?,
         override val status: CardStatus
     ) : ScratchCardUiState(code, status)
-
-    data class Error(
-        override val code: String?,
-        override val status: CardStatus,
-        val message: String
-    ) : ScratchCardUiState(code, status)
 }

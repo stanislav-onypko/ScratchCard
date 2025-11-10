@@ -8,8 +8,11 @@ import com.example.scratchcard.domain.usecase.ActivateCardUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,6 +27,9 @@ class ScratchCardViewModel @Inject constructor(
         ScratchCardUiState.Content(code = null, status = CardStatus.NOT_SCRATCHED)
     )
     val uiState: StateFlow<ScratchCardUiState> = _uiState.asStateFlow()
+
+    private val _errorEvent = MutableSharedFlow<String>()
+    val errorEvent: SharedFlow<String> = _errorEvent.asSharedFlow()
 
     private var scratchJob: Job? = null
 
@@ -59,10 +65,10 @@ class ScratchCardViewModel @Inject constructor(
                 val scratchCard = activateCardUseCase(code)
                 _uiState.value = scratchCard.toUiState()
             } catch (e: Exception) {
-                _uiState.value = ScratchCardUiState.Error(
+                _errorEvent.emit("Activation failed: ${e.message}")
+                _uiState.value = ScratchCardUiState.Content(
                     _uiState.value.code,
-                    _uiState.value.status,
-                    "Activation failed: ${e.message}"
+                    _uiState.value.status
                 )
             }
         }

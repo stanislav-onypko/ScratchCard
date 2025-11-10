@@ -1,7 +1,19 @@
 <resources>
     <string name="app_name">ScratchCard</string>
 
+    <!-- Screen Titles -->
     <string name="main_screen_title">Main Screen</string>
     <string name="scratch_screen_title">Scratch Screen</string>
     <string name="activation_screen_title">Activation Screen</string>
+
+    <!-- Labels -->
+    <string name="card_state_label">Card State: %1$s</string>
+    <string name="code_label">Code: %1$s</string>
+
+    <!-- Button Texts -->
+    <string name="go_to_scratch_screen_button">Go to Scratch Screen</string>
+    <string name="go_to_activation_screen_button">Go to Activation Screen</string>
+    <string name="scratch_card_button">Scratch Card</string>
+    <string name="activate_card_button">Activate Card</string>
+
 </resources>
