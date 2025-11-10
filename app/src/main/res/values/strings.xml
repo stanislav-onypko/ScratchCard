@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ScratchCard</string>
+
+    <string name="main_screen_title">Main Screen</string>
+    <string name="scratch_screen_title">Scratch Screen</string>
+    <string name="activation_screen_title">Activation Screen</string>
+</resources>
